@@ -1,0 +1,39 @@
+#! /usr/bin/env bash
+
+function publish() {
+  echo 'publish not implemented'
+}
+
+command=$1
+
+case $command in
+pull)
+  echo "pulling remote note store"
+  aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE
+  ;;
+push)
+  echo "pushing local note store to remote"
+  aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET
+  ;;
+publish)
+  publish
+  ;;
+delete)
+  item=$2
+  echo "deleting $item"
+  
+  if [ -d $item ]; then
+    rm -rf $item
+    aws s3 rm --recursive s3://$NOTES_S3_BUCKET/$item
+  else 
+    if [ -e $item ]; then
+      rm $item
+      aws s3 rm s3://$NOTES_S3_BUCKET/$item
+    else
+      echo "'$item' not found."
+      exit 0
+    fi
+  fi
+  ;;
+esac
+
