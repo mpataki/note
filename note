@@ -21,17 +21,17 @@ publish)
 delete)
   item=$2
   echo "deleting $item"
-  
+
   if [ -d $item ]; then
     rm -rf $item
     aws s3 rm --recursive s3://$NOTES_S3_BUCKET/$item
-  else 
+  else
     if [ -e $item ]; then
       rm $item
       aws s3 rm s3://$NOTES_S3_BUCKET/$item
     else
       echo "'$item' not found."
-      exit 0
+      exit 1
     fi
   fi
   ;;
