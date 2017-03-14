@@ -17,5 +17,5 @@ print_with_color $GREEN 'Installing `note` to /usr/local/bin'
 cp ./note /usr/local/bin
 
 print_with_color $GREEN 'linking bash completion script'
-ln -s `pwd`/bash_completion.d/note /usr/local/etc/bash_completion.d/
+ln -s `pwd`/bash_completion.d/note /usr/local/etc/bash_completion.d
 
