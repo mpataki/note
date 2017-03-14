@@ -7,7 +7,7 @@ function _file_comp() {
     grep -v .DS_Store
   )
 
-COMPREPLY=( $(compgen -W "$options" -- ${cur}) )
+  COMPREPLY=( $(compgen -W "$options" -- ${cur}) )
 }
 
 function _note() {
