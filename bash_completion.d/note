@@ -1,3 +1,15 @@
+function _file_comp() {
+  local cur=$1
+
+  local options=$(
+    find $LOCAL_NOTE_STORE |
+    awk -v note_store=$LOCAL_NOTE_STORE/ '{ gsub(note_store, "") ; print $0 }' |
+    grep -v .DS_Store
+  )
+
+COMPREPLY=( $(compgen -W "$options" -- ${cur}) )
+}
+
 function _note() {
   COMPREPLY=()
   local cur="${COMP_WORDS[COMP_CWORD]}"
@@ -7,17 +19,11 @@ function _note() {
     note)
       COMPREPLY=( $(compgen -W "pull push publish delete" -- ${cur}) )
       ;;
-    pull)
-      COMPREPLY=( $(compgen -W "`ls`" -- ${cur}) )
-      ;;
-    push)
-      ;;
-    publish)
-      ;;
-    delete)
-      ;;
+    pull) _file_comp $cur;;
+    push) _file_comp $cur;;
+    publish) _file_comp $cur;;
+    delete) _file_comp $cur;;
   esac
-
 }
 
 complete -F _note note
