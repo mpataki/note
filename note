@@ -1,24 +1,10 @@
 #! /usr/bin/env bash
 
-function publish() {
+function _publish() {
   echo 'publish not implemented'
 }
 
-command=$1
-
-case $command in
-pull)
-  echo "pulling remote note store"
-  aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE
-  ;;
-push)
-  echo "pushing local note store to remote"
-  aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET
-  ;;
-publish)
-  publish
-  ;;
-delete)
+function _delete() {
   item=$2
   echo "deleting $item"
 
@@ -34,6 +20,20 @@ delete)
       exit 1
     fi
   fi
+}
+
+command=$1
+
+case $command in
+pull)
+  echo "pulling remote note store"
+  aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE
   ;;
+push)
+  echo "pushing local note store to remote"
+  aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET
+  ;;
+publish) _publish;;
+delete) _delete;;
 esac
 

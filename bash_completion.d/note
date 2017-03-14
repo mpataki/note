@@ -1,0 +1,22 @@
+function _note() {
+  local cur prev opts base
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+  case "${prev}" in
+    pull)
+      ;;
+    push)
+      ;;
+    publish)
+      ;;
+    delete)
+      ;;
+  esac
+
+  COMPREPLY=("one" "two" "three")
+}
+
+complete -F _note note
+
