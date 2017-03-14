@@ -4,8 +4,8 @@ function _publish() {
   echo 'publish not implemented'
 }
 
-function _delete() {
-  item=$2
+function _rm() {
+  item=$1
   echo "deleting $item"
 
   if [ -d $item ]; then
@@ -22,18 +22,26 @@ function _delete() {
   fi
 }
 
+function _ls() {
+  arg=$1
+
+  tree -C $LOCAL_NOTE_STORE/$arg
+}
+
 command=$1
+arg=$2
 
 case $command in
-pull)
-  echo "pulling remote note store"
-  aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE
-  ;;
-push)
-  echo "pushing local note store to remote"
-  aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET
-  ;;
-publish) _publish;;
-delete) _delete;;
+  pull)
+    echo "pulling remote note store"
+    aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE
+    ;;
+  push)
+    echo "pushing local note store to remote"
+    aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET
+    ;;
+  publish) _publish $arg;;
+  rm) _rm $arg;;
+  ls) _ls $arg;;
 esac
 
