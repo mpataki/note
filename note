@@ -43,5 +43,6 @@ case $command in
   publish) _publish $arg;;
   rm) _rm $arg;;
   ls) _ls $arg;;
+  e) ${EDITOR:-vim} $LOCAL_NOTE_STORE/$arg;;
 esac
 

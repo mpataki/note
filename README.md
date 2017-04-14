@@ -23,5 +23,5 @@ Pull this repo and run the `install.sh` script. It assumes that you have a `usr/
 `note ls` - list your local notes
 `note push` - push local notes to s3
 `note pull` - pull notes from s3
-`note rm` - remove a note both locally and on the remote
-
+`note rm <file>` - remove a note both locally and on the remote
+`note e <file>` - open the file with your `EDITOR`, or vim if you don't have one set
