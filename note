@@ -10,11 +10,11 @@ function _rm() {
 
   if [ -d $item ]; then
     rm -rf $item
-    aws s3 rm --recursive s3://$NOTES_S3_BUCKET/$item
+    aws s3 rm s3://$NOTES_S3_BUCKET/$item --recursive --profile $NOTES_AWS_PROFILE
   else
     if [ -e $item ]; then
       rm $item
-      aws s3 rm s3://$NOTES_S3_BUCKET/$item
+      aws s3 rm s3://$NOTES_S3_BUCKET/$item --profile $NOTES_AWS_PROFILE
     else
       echo "'$item' not found."
       exit 1
@@ -34,11 +34,11 @@ arg=$2
 case $command in
   pull)
     echo "pulling remote note store"
-    aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE
+    aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE --profile $NOTES_AWS_PROFILE
     ;;
   push)
     echo "pushing local note store to remote"
-    aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET
+    aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET --profile $NOTES_AWS_PROFILE
     ;;
   publish) _publish $arg;;
   rm) _rm $arg;;
