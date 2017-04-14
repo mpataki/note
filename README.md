@@ -12,7 +12,13 @@ export LOCAL_NOTE_STORE=$HOME/notes
 export NOTES_AWS_PROFILE=notes
 ```
 
-## Commands:
+The best thing about this project is it's bash completion - tab to complete commands and your own note names.
+
+## Installation
+
+Pull this repo and run the `install.sh` script. It assumes that you have a `usr/local/bin` in your `PATH` for the `note` cammand itself, and `/usr/local/etc/bash_completion.d` for the bash completion.
+
+## Commands
 
 `note ls` - list your local notes
 `note push` - push local notes to s3
