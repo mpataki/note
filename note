@@ -28,6 +28,14 @@ function _ls() {
   tree -C $LOCAL_NOTE_STORE/$arg
 }
 
+function _e() {
+  arg=$1
+
+  mkdir -p $LOCAL_NOTE_STORE/`echo $arg | rev | cut -d '/' -f 2- | rev`
+
+  ${EDITOR:-vim} $LOCAL_NOTE_STORE/$arg
+}
+
 command=$1
 arg=$2
 
@@ -43,6 +51,6 @@ case $command in
   publish) _publish $arg;;
   rm) _rm $arg;;
   ls) _ls $arg;;
-  e) ${EDITOR:-vim} $LOCAL_NOTE_STORE/$arg;;
+  e) _e $arg;;
 esac
 
