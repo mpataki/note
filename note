@@ -4,7 +4,8 @@ function _render() {
   item=$LOCAL_NOTE_STORE/$1
   item_html=$item.html
 
-  ruby -r 'github/markup' -e 'puts GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, File.read((ARGV.first)))' $item > $item_html
+  ruby -r 'github/markup' -r 'erb' -e 'md = GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, File.read((ARGV.first))); puts ERB.new(File.read("render_md_template.html.erb")).result(binding)' $item > $item_html
+
   echo "rendered $item_html"
 }
 
