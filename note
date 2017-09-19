@@ -1,16 +1,18 @@
 #! /usr/bin/env bash
 
-function _render() {
-  item=$LOCAL_NOTE_STORE/$1
-  item_html=$item.html
 
-  ruby -r 'github/markup' -r 'erb' -e 'md = GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, File.read((ARGV.first))); puts ERB.new(File.read("render_md_template.html.erb")).result(binding)' $item > $item_html
+function _e() {
+  arg=$1
 
-  echo "rendered $item_html"
+  mkdir -p $LOCAL_NOTE_STORE/`echo $arg | rev | cut -d '/' -f 2- | rev`
+
+  ${EDITOR:-vim} $LOCAL_NOTE_STORE/$arg
 }
 
-function _publish() {
-  echo 'not implemented'
+function _ls() {
+  arg=$1
+
+  tree -C $LOCAL_NOTE_STORE/$arg
 }
 
 function _rm() {
@@ -31,18 +33,17 @@ function _rm() {
   fi
 }
 
-function _ls() {
-  arg=$1
+function _render() {
+  item=$LOCAL_NOTE_STORE/$1
+  item_html=$item.html
 
-  tree -C $LOCAL_NOTE_STORE/$arg
+  ruby -r 'github/markup' -r 'erb' -e 'md = GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, File.read((ARGV.first))); puts ERB.new(File.read("render_md_template.html.erb")).result(binding)' $item > $item_html
+
+  echo "rendered $item_html"
 }
 
-function _e() {
-  arg=$1
-
-  mkdir -p $LOCAL_NOTE_STORE/`echo $arg | rev | cut -d '/' -f 2- | rev`
-
-  ${EDITOR:-vim} $LOCAL_NOTE_STORE/$arg
+function _publish() {
+  echo 'not implemented'
 }
 
 command=$1
