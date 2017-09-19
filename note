@@ -1,7 +1,15 @@
 #! /usr/bin/env bash
 
+function _render() {
+  item=$LOCAL_NOTE_STORE/$1
+  item_html=$item.html
+
+  ruby -r 'github/markup' -e 'puts GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, File.read((ARGV.first)))' $item > $item_html
+  echo "rendered $item_html"
+}
+
 function _publish() {
-  echo 'publish not implemented'
+  echo 'not implemented'
 }
 
 function _rm() {
@@ -48,6 +56,7 @@ case $command in
     echo "pushing local note store to remote"
     aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET --profile $NOTES_AWS_PROFILE
     ;;
+  render) _render $arg;;
   publish) _publish $arg;;
   rm) _rm $arg;;
   ls) _ls $arg;;

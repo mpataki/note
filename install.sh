@@ -13,6 +13,12 @@ function print_with_color() {
   printf "$color$string$NONE\n"
 }
 
+print_with_color $GREEN 'Installing github/markup gem'
+gem install github-markup
+
+print_with_color $GREEN 'Installing github/markdown gem'
+gem install github-markdown
+
 print_with_color $GREEN 'Installing `note` to /usr/local/bin'
 cp ./note /usr/local/bin
 

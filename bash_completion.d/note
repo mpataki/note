@@ -17,10 +17,11 @@ function _note() {
 
   case "${prev}" in
     note)
-      COMPREPLY=( $(compgen -W "pull push publish rm ls e" -- ${cur}) )
+      COMPREPLY=( $(compgen -W "pull push render publish rm ls e" -- ${cur}) )
       ;;
     pull) _file_comp $cur;;
     push) _file_comp $cur;;
+    render) _file_comp $cur;;
     publish) _file_comp $cur;;
     rm) _file_comp $cur;;
     ls) _file_comp $cur;;
