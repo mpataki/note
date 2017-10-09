@@ -25,3 +25,7 @@ cp ./note /usr/local/bin
 print_with_color $GREEN 'linking bash completion script'
 ln -s `pwd`/bash_completion.d/note /usr/local/etc/bash_completion.d
 
+print_with_color $GREEN 'linking zsh completion script'
+mkdir -p ~/.zsh/completions
+ln -s `pwd`/zsh_completion/_note ~/.zsh/completions
+

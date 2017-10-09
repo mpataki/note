@@ -1,0 +1,38 @@
+
+_note () {
+    local cmd
+
+    if (( CURRENT > 2)); then
+        cmd=${words[2]}
+
+        # Set the context for the subcommand.
+        curcontext="${curcontext%:*:*}:note-$cmd"
+
+        # Narrow the range of words we are looking at to exclude `note'
+        (( CURRENT-- ))
+        shift words
+
+        _complete_notes
+    else
+        local -a subcommands
+        subcommands=(
+            "push:Push notes to s3"
+            "pull:Pull notes from s3"
+            "ls:List notes"
+            "e:Edit a note"
+            "rm:Remove a note"
+            "render:Render a markdown note to HTML"
+            "publish:Publish note to the web"
+        )
+        _describe -t commands 'note' subcommands
+    fi
+}
+
+_complete_notes () {
+  local -a notes
+  notes=( $LOCAL_NOTE_STORE/**/* )
+  _multi_parts / notes
+}
+
+_note
+
