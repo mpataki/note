@@ -33,6 +33,16 @@ function _rm() {
   fi
 }
 
+function _pull() {
+    echo "pulling remote note store"
+    aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE --profile $NOTES_AWS_PROFILE
+}
+
+function _push() {
+    echo "pushing local note store to remote"
+    aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET --profile $NOTES_AWS_PROFILE
+}
+
 function _render() {
   item=$LOCAL_NOTE_STORE/$1
   item_html=$item.html
@@ -43,21 +53,22 @@ function _render() {
 }
 
 function _publish() {
-  echo 'not implemented'
+  item=$1
+  echo "publishing $item"
+
+  if [ -d $item]; then
+    aws s3 cp -r $LOCAL_NOTE_STORE/$item s3://$NOTES_S3_BUCKET/$item --acl public-read --profile $NOTES_AWS_PROFILE
+  else
+    aws s3 cp $LOCAL_NOTE_STORE/$item s3://$NOTES_S3_BUCKET/$item --acl public-read --profile $NOTES_AWS_PROFILE
+  fi
 }
 
 command=$1
 arg=$2
 
 case $command in
-  pull)
-    echo "pulling remote note store"
-    aws s3 sync s3://$NOTES_S3_BUCKET $LOCAL_NOTE_STORE --profile $NOTES_AWS_PROFILE
-    ;;
-  push)
-    echo "pushing local note store to remote"
-    aws s3 sync $LOCAL_NOTE_STORE s3://$NOTES_S3_BUCKET --profile $NOTES_AWS_PROFILE
-    ;;
+  pull) _pull;;
+  push) _push;;
   render) _render $arg;;
   publish) _publish $arg;;
   rm) _rm $arg;;
