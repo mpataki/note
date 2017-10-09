@@ -5,13 +5,13 @@ _note () {
 
   if (( CURRENT <= 2 )); then
     subcommands=(
-        "push:Push notes to s3"
-        "pull:Pull notes from s3"
-        "ls:List notes"
-        "e:Edit a note"
-        "rm:Remove a note"
-        "render:Render a markdown note to HTML"
-        "publish:Publish note to the web"
+      "push:Push notes to s3"
+      "pull:Pull notes from s3"
+      "ls:List notes"
+      "e:Edit a note"
+      "rm:Remove a note"
+      "render:Render a markdown note to HTML"
+      "publish:Publish note to the web"
     )
 
     _describe -t commands 'note' subcommands
@@ -23,7 +23,7 @@ _note () {
     case $line[1] in
       push|pull|ls|e|rm|render|publish)
         local notes=$(
-          find $LOCAL_NOTE_STORE |
+          find $LOCAL_NOTE_STORE -type f |
           awk -v note_store=$LOCAL_NOTE_STORE/ '{ gsub(note_store, "") ; print $0 }' |
           grep -v .DS_Store
         )
@@ -32,6 +32,4 @@ _note () {
     esac
   fi
 }
-
-_note
 
