@@ -1,37 +1,36 @@
+#compdef _note note
 
 _note () {
-    local cmd
+  local -a commands
 
-    if (( CURRENT > 2)); then
-        cmd=${words[2]}
+  if (( CURRENT <= 2 )); then
+    subcommands=(
+        "push:Push notes to s3"
+        "pull:Pull notes from s3"
+        "ls:List notes"
+        "e:Edit a note"
+        "rm:Remove a note"
+        "render:Render a markdown note to HTML"
+        "publish:Publish note to the web"
+    )
 
-        # Set the context for the subcommand.
-        curcontext="${curcontext%:*:*}:note-$cmd"
+    _describe -t commands 'note' subcommands
+  else
+    local line
 
-        # Narrow the range of words we are looking at to exclude `note'
-        (( CURRENT-- ))
-        shift words
+    _arguments -C "*::arg:->args"
 
-        _complete_notes
-    else
-        local -a subcommands
-        subcommands=(
-            "push:Push notes to s3"
-            "pull:Pull notes from s3"
-            "ls:List notes"
-            "e:Edit a note"
-            "rm:Remove a note"
-            "render:Render a markdown note to HTML"
-            "publish:Publish note to the web"
+    case $line[1] in
+      push|pull|ls|e|rm|render|publish)
+        local notes=$(
+          find $LOCAL_NOTE_STORE |
+          awk -v note_store=$LOCAL_NOTE_STORE/ '{ gsub(note_store, "") ; print $0 }' |
+          grep -v .DS_Store
         )
-        _describe -t commands 'note' subcommands
-    fi
-}
-
-_complete_notes () {
-  local -a notes
-  notes=( $LOCAL_NOTE_STORE/**/* )
-  _multi_parts / notes
+        _multi_parts / "($notes)"
+        ;;
+    esac
+  fi
 }
 
 _note
