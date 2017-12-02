@@ -16,7 +16,7 @@ The best thing about this project is it's bash & zsh completion - tab to complet
 
 ## Installation
 
-Pull this repo and run the `install.sh` script. It assumes that you have a `usr/local/bin` in your `PATH` for the `note` cammand itself, and `/usr/local/etc/bash_completion.d` for the bash completion.
+Pull this repo and run the `install.sh` script. It assumes that you have a `usr/local/bin` in your `PATH` for the `note` cammand itself, a `/usr/local/etc/bash_completion.d` directory for bash completion, and a `~/.zsh/completions` directory for zsh completion.
 
 ## Commands
 
