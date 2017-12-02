@@ -20,13 +20,13 @@ Pull this repo and run the `install.sh` script. It assumes that you have a `usr/
 
 ## Commands
 
-`note ls` - list your local notes
-`note push` - push local notes to s3
-`note pull` - pull notes from s3
-`note rm <file>` - remove a note both locally and on the remote
-`note e <file>` - open the file with your `EDITOR`, or vim if you don't have one set
-`note render <markdown-file>` - render a markdown file to html (leverages the GitHub markdown engine)
-`note publish <file>` - pushes a public ACL for the file, allowing you to share it via a public link
+- `note ls` - list your local notes
+- `note push` - push local notes to s3
+- `note pull` - pull notes from s3
+- `note rm <file>` - remove a note both locally and on the remote
+- `note e <file>` - open the file with your `EDITOR`, or vim if you don't have one set
+- `note render <markdown-file>` - render a markdown file to html (leverages the GitHub markdown engine)
+- `note publish <file>` - pushes a public ACL for the file, allowing you to share it via a public link
   - The link itself depends on how you've setup your bucket.
 
 ## Bucket Setup
