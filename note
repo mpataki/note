@@ -1,6 +1,5 @@
 #! /usr/bin/env bash
 
-
 function _e() {
   arg=$1
 
@@ -56,8 +55,8 @@ function _publish() {
   item=$1
   echo "publishing $item"
 
-  if [ -d $item]; then
-    aws s3 cp -r $LOCAL_NOTE_STORE/$item s3://$NOTES_S3_BUCKET/$item --acl public-read --profile $NOTES_AWS_PROFILE
+  if [ -d $LOCAL_NOTE_STORE/$item ]; then
+    aws s3 cp $LOCAL_NOTE_STORE/$item s3://$NOTES_S3_BUCKET/$item --recursive --acl public-read --profile $NOTES_AWS_PROFILE
   else
     aws s3 cp $LOCAL_NOTE_STORE/$item s3://$NOTES_S3_BUCKET/$item --acl public-read --profile $NOTES_AWS_PROFILE
   fi
