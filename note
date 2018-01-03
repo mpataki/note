@@ -16,13 +16,13 @@ function _e() {
 }
 
 function _ls() {
-  arg=$1
+  local arg=$1
 
   tree -C $LOCAL_NOTE_STORE/$arg
 }
 
 function _rm() {
-  item=$1
+  local item=$1
   echo "deleting $item"
 
   if [ -d $item ]; then
@@ -50,8 +50,8 @@ function _push() {
 }
 
 function _render() {
-  item=$LOCAL_NOTE_STORE/$1
-  item_html=$item.html
+  local item=$LOCAL_NOTE_STORE/$1
+  local item_html=$item.html
 
   ruby -r 'github/markup' -r 'erb' -e 'md = GitHub::Markup.render_s(GitHub::Markups::MARKUP_MARKDOWN, File.read((ARGV.first))); puts ERB.new(File.read("render_md_template.html.erb")).result(binding)' $item > $item_html
 
@@ -59,7 +59,7 @@ function _render() {
 }
 
 function _publish() {
-  item=$1
+  local item=$1
   echo "publishing $item"
 
   if [ -d $LOCAL_NOTE_STORE/$item ]; then
