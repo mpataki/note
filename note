@@ -1,11 +1,18 @@
 #! /usr/bin/env bash
 
 function _e() {
-  arg=$1
+  local arg=$1
+  local item_path=$LOCAL_NOTE_STORE/$arg
+  local item_dir=$LOCAL_NOTE_STORE/`echo $arg | rev | cut -d '/' -f 2- | rev`
 
-  mkdir -p $LOCAL_NOTE_STORE/`echo $arg | rev | cut -d '/' -f 2- | rev`
+  mkdir -p $item_dir
 
-  ${EDITOR:-vim} $LOCAL_NOTE_STORE/$arg
+  if [[ `which mark` ]]; then
+    mark $item_path &
+    open $item_dir &
+  fi
+
+  ${EDITOR:-vim} $item_path
 }
 
 function _ls() {
