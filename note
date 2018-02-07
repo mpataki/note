@@ -24,13 +24,14 @@ function _ls() {
 function _rm() {
   local item=$1
   echo "deleting $item"
+  local full_path_to_item=$LOCAL_NOTE_STORE/$item
 
-  if [ -d $item ]; then
-    rm -rf $item
+  if [ -d $full_path_to_item ]; then
+    rm -rf $full_path_to_item
     aws s3 rm s3://$NOTES_S3_BUCKET/$item --recursive --profile $NOTES_AWS_PROFILE
   else
-    if [ -e $item ]; then
-      rm $item
+    if [ -e $full_path_to_item ]; then
+      rm $full_path_to_item
       aws s3 rm s3://$NOTES_S3_BUCKET/$item --profile $NOTES_AWS_PROFILE
     else
       echo "'$item' not found."
