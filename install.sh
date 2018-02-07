@@ -22,10 +22,10 @@ gem install github-markdown
 print_with_color $GREEN 'Installing `note` to /usr/local/bin'
 cp ./note /usr/local/bin
 
-print_with_color $GREEN 'linking bash completion script'
-ln -s `pwd`/bash_completion.d/note /usr/local/etc/bash_completion.d
+print_with_color $GREEN 'Installing bash completion script'
+cp `pwd`/bash_completion.d/note /usr/local/etc/bash_completion.d
 
-print_with_color $GREEN 'linking zsh completion script'
+print_with_color $GREEN 'Installing zsh completion script'
 mkdir -p ~/.zsh/completions
-ln -s `pwd`/zsh_completion/_note ~/.zsh/completions
+cp `pwd`/zsh_completion/_note ~/.zsh/completions
 
