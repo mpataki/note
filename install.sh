@@ -35,3 +35,10 @@ fi
 print_with_color $GREEN 'Installing zsh completion script'
 mkdir -p ~/.zsh/completions
 cp `pwd`/zsh_completion/_note ~/.zsh/completions
+
+echo ''
+print_with_color $BLUE 'Here are some useful environment variables:'
+print_with_color $BLUE 'LOCAL_NOTE_STORE: local directory where notes will be stored'
+print_with_color $BLUE 'NOTES_S3_BUCKET: AWS S3 bucket for cloud storage'
+print_with_color $BLUE 'NOTES_AWS_PROFILE: AWS profile to use when interacting with S3'
+
